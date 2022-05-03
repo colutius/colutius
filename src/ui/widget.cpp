@@ -102,6 +102,7 @@ void Widget::addMsg()
 //刷新频道列表
 void Widget::refreshChannelList()
 {
+    //暂时屏蔽信号，防止没有执行完毕时刷新消息列表导致索引出错
     ui->channelList->blockSignals(true);
     qDebug() << "刷新频道列表";
     int count = ui->channelList->count();
@@ -110,14 +111,13 @@ void Widget::refreshChannelList()
     {
         ui->channelList->takeItem(0);
     }
-    qDebug() << "清空频道列表";
     Server *server = client->getServer(ui->serverList->currentRow());
     for (int i = 0; i < client->getChannelNum(server); i++)
     {
         ui->channelList->addItem(client->getChannel(server, i)->getItem());
     }
+    //解除屏蔽信号
     ui->channelList->blockSignals(false);
-
     ui->channelList->setCurrentRow(client->getChannelNum(server) - 1);
 }
 //刷新消息列表
@@ -130,8 +130,6 @@ void Widget::refreshMessageList()
     {
         ui->msgList->takeItem(0);
     }
-    qDebug() << "当前服务器序号：" + QString::number(ui->serverList->currentRow());
-    qDebug() << "当前频道序号：" + QString::number(ui->channelList->currentRow());
     if (ui->channelList->currentRow() == -1)
     {
         return;
