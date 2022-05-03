@@ -30,6 +30,8 @@ class Widget : public QWidget
     void refreshServerList();  //刷新服务器列表
     void refreshChannelList(); //刷新频道列表
     void refreshMessageList(); //刷新消息列表
+    void addChannelFail();     //添加频道失败
+
   private:
     Ui::Widget *ui;
 };

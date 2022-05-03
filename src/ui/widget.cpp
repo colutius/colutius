@@ -28,8 +28,7 @@ void Widget::initConnect()
     //添加频道成功
     connect(this->client, &Client::addChannelSuccess, this, &Widget::refreshChannelList);
     //添加频道失败
-    connect(this->client, &Client::addChannelFail, this,
-            [this]() { QMessageBox::information(this, tr("频道加入失败"), tr("该频道只有注册用户可以加入！")); });
+    connect(this->client, &Client::addChannelFail, this, &Widget::addChannelFail);
 }
 //打开登录对话框
 void Widget::login()
@@ -123,4 +122,9 @@ void Widget::refreshChannelList()
 //刷新消息列表
 void Widget::refreshMessageList()
 {
+}
+//频道加入失败
+void Widget::addChannelFail()
+{
+    QMessageBox::information(this, tr("频道加入失败"), tr("该频道只有注册用户可以加入！"));
 }

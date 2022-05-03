@@ -57,6 +57,8 @@ void Client::addServer(QString host, int port, QString nick, QString user, QStri
             emit addServerFail();
         });
         connect(newServer, &Server::get, this, [this]() { emit getNewMessage(); });
+        connect(newServer, &Server::channelAddSuccess, this, [this]() { emit addChannelSuccess(); });
+        connect(newServer, &Server::channelAddFail, this, [this]() { emit addChannelFail(); });
     }
 }
 //添加频道
@@ -64,6 +66,4 @@ void Client::addChannel(const QString &channelName, int serverIndex)
 {
     Server *server = getServer(serverIndex);
     server->addChannel(channelName);
-    connect(server, &Server::channelAddSuccess, this, [this]() { emit addChannelSuccess(); });
-    connect(server, &Server::channelAddFail, this, [this]() { emit addChannelFail(); });
 }
