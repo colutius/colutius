@@ -17,11 +17,16 @@ Server::Server(QString host, int port, QString nick, QString user, QString passw
     this->colors.append(QColor(0xf3d64e));
     this->colors.append(QColor(0xf1ccb8));
     this->colors.append(QColor(0xed9678));
-
+    initConnect();
     initItem();
 }
 Server::~Server() = default;
-
+//初始化信号槽
+void Server::initConnect()
+{
+    connect(&this->socket, &QTcpSocket::readyRead, this, &Server::receiveData);
+}
+//初始化item对象
 void Server::initItem()
 {
     //初始化item实例
@@ -83,13 +88,49 @@ bool Server::login()
     {
         if (sendData("User " + this->user + " 8 * :Colutius IRC Client"))
         {
-            qDebug() << "登陆成功！";
             return true;
         }
     }
     return false;
 }
-
+//接收数据
+void Server::receiveData()
+{
+    QString data = this->socket.readAll();
+    QStringList buf = data.split("\r\n");
+    foreach (QString i, buf)
+    {
+        if (!i.isEmpty())
+        {
+            //新建消息实例
+            auto msg = new Message;
+            //设置原始数据
+            msg->setrawMsg(i);
+            //解析消息
+            msg->parse();
+            //回应PING
+            if (msg->getCommand() == "PING")
+            {
+                this->sendData(msg->getMainMsg());
+                qDebug() << "PING? PONG!";
+            }
+            else if (msg->getCommand() == "376")
+            {
+                qDebug() << "登录成功！";
+                emit success();
+            }
+            else if (msg->getCommand() == "433")
+            {
+                qDebug() << "登录失败！昵称被占用！";
+                emit fail();
+            }
+            else
+            {
+                qDebug() << msg->getCommand() + " " + msg->getMainMsg();
+            }
+        }
+    }
+}
 //获取字母对应图标ID
 QChar getFontID(QChar letter)
 {

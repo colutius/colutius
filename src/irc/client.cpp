@@ -50,7 +50,9 @@ void Client::addServer(QString host, int port, QString nick, QString user, QStri
     if (newServer->login())
     {
         //发射登录成功信号
-        emit addServerSuccess();
+        qDebug() << "登录信息发送成功！";
+        connect(newServer, &Server::success, this, [this]() { emit addServerSuccess(); });
+        connect(newServer, &Server::fail, this, [this]() { emit addServerFail(); });
     }
 }
 //添加频道

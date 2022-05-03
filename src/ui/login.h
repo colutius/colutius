@@ -20,6 +20,7 @@ class Login : public QDialog
     void initConnect(); //初始化信号槽
     void addServer();   // 添加服务器
     void success();     //登陆成功
+    void fail();        //登录失败
 
   private:
     Ui::Login *ui;

@@ -24,6 +24,8 @@ void Login::initConnect()
     connect(ui->connectBtn, &QPushButton::clicked, this, &Login::addServer);
     //登录成功
     connect(this->client, &Client::addServerSuccess, this, &Login::success);
+    //登录失败
+    connect(this->client, &Client::addServerFail, this, &Login::fail);
 }
 void Login::addServer()
 {
@@ -44,6 +46,10 @@ void Login::addServer()
 //登录成功
 void Login::success()
 {
-    qDebug() << "关闭对话框";
     this->close();
+}
+
+void Login::fail()
+{
+    ui->connectBtn->setEnabled(true);
 }

@@ -10,7 +10,8 @@ class Client : public QObject
 {
     Q_OBJECT
   signals:
-    void addServerSuccess();
+    void addServerSuccess(); //登录成功信号
+    void addServerFail();    //登录失败信号
 
   public:
     QList<Server *> serverList; //服务器列表
