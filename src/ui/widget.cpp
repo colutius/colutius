@@ -6,6 +6,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
     this->client = new Client;
     ui->setupUi(this);
     this->setWindowIcon(QIcon(":/img/img/icon.svg"));
+    initTrayIcon();
     initConnect();
 }
 Widget::~Widget()
@@ -30,6 +31,17 @@ void Widget::initConnect()
     //添加频道失败
     connect(this->client, &Client::addChannelFail, this,
             [this]() { QMessageBox::information(this, tr("频道加入失败"), tr("该频道只有注册用户可以加入！")); });
+    //添加系统托盘更新
+    connect(this, &Widget::updateTrayIconSignal, this, &Widget::updateTrayIcon);
+    //双击托盘关联
+    connect(col_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this, SLOT(OnSystemTrayClicked(QSystemTrayIcon::ActivationReason)));
+    //ExitAction关联
+    connect(exit, &QAction::triggered, this, &Widget::OnExit);
+    //MinAction关联
+    connect(min, &QAction::triggered, this, [=]{ this->showMinimized(); });
+    //MaxAction关联
+    connect(max, &QAction::triggered, this, [=]{ this->showMaximized(); });
 }
 //打开登录对话框
 void Widget::login()
@@ -123,4 +135,72 @@ void Widget::refreshChannelList()
 //刷新消息列表
 void Widget::refreshMessageList()
 {
+}
+
+/**
+ * 初始化系统托盘
+ * @brief Widget::initTrayIcon
+ */
+void Widget::initTrayIcon()
+{
+    col_trayIcon = new QSystemTrayIcon(this);
+    col_trayIcon->setIcon(QIcon(":/img/img/icon.png"));
+    col_trayIcon->setToolTip("Colutius-XXX");
+    col_trayIcon->show();
+
+    //添加菜单
+    systemTrayIconMenu = new QMenu();
+    min = new QAction();
+    exit = new QAction();
+    max = new QAction();
+    min->setText("最小化程序");
+    exit->setText("退出");
+    max->setText("最大化程序");
+    //添加活动
+    systemTrayIconMenu->addAction(min);
+    systemTrayIconMenu->addAction(max);
+    systemTrayIconMenu->addAction(exit);
+    col_trayIcon->setContextMenu(systemTrayIconMenu);
+}
+
+/**
+ * 更新系统托盘信息
+ * @brief Widget::updateTrayIcon
+ * 更新数据 调用updateSystemTrayIconSignal 信号
+ */
+void Widget::updateTrayIcon()
+{
+    //TODO 从中间件获取服务器相应信息
+
+    QString tipString = "Colutius-XXX\n当前频道数:";
+    tipString += QString::number(client->getServerNum());
+    tipString += "\n当前服务数:";
+    tipString += QString::number(10);
+    tipString += "\n";
+    col_trayIcon->setToolTip(tipString);
+}
+
+/**
+ * 系统托盘单双击事件
+ * @brief Widget::OnSystemTrayClicked
+ */
+int Widget::OnSystemTrayClicked(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::DoubleClick)
+    {
+        // 显示主窗口
+        this->showNormal();
+    }
+    return 0;
+}
+
+/**
+ * 程序退出事件
+ * @brief Widget::OnExit
+ * @return
+ */
+int Widget::OnExit()
+{
+    QApplication::exit(0);
+    return 0;
 }

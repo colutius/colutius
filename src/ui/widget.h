@@ -4,6 +4,10 @@
 #include "config.h"
 #include "login.h"
 #include <QWidget>
+#include <QSystemTrayIcon>
+#include <QString>
+#include <QMenu>
+#include <QAction>
 
 namespace Ui
 {
@@ -30,6 +34,18 @@ class Widget : public QWidget
     void refreshServerList();  //刷新服务器列表
     void refreshChannelList(); //刷新频道列表
     void refreshMessageList(); //刷新消息列表
+    void initTrayIcon();       //初始化系统托盘
+public slots:
+    void updateTrayIcon();     //更新系统托盘
+    int OnSystemTrayClicked(QSystemTrayIcon::ActivationReason reason);//系统托盘事件
+    int OnExit();              //退出事件
+signals:
+    void updateTrayIconSignal();
   private:
     Ui::Widget *ui;
+    QSystemTrayIcon *col_trayIcon; //系统托盘
+    QMenu *systemTrayIconMenu;     //托盘菜单
+    QAction *min;                  //最小化动作
+    QAction *exit;                 //退出动作
+    QAction *max;                  //最大化
 };
