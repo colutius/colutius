@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/icon.svg</file>
+        <file>img/icon.png</file>
+        <file>img/icon.ico</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file>Login.qss</file>
+        <file>Widget.qss</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file>iconfont/iconfont.json</file>
+        <file>iconfont/iconfont.ttf</file>
+        <file>iconfont/iconfont.woff</file>
+        <file>iconfont/iconfont.woff2</file>
+        <file>iconfont/letter.json</file>
+        <file>iconfont/letter.ttf</file>
+        <file>iconfont/letter.woff</file>
+        <file>iconfont/letter.woff2</file>
+    </qresource>
+</RCC>
