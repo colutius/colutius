@@ -13,6 +13,7 @@ SOURCES += \
     src/irc/server.cpp \
     src/irc/channel.cpp \
     src/irc/message.cpp \
+    src/irc/client.cpp\
     src/ui/config.cpp \
     src/ui/login.cpp \
     src/ui/widget.cpp \
@@ -21,6 +22,7 @@ HEADERS += \
     src/irc/server.h \
     src/irc/channel.h \
     src/irc/message.h \
+    src/irc/client.h \
     src/ui/config.h \
     src/ui/login.h \
     src/ui/widget.h \
