@@ -22,6 +22,7 @@ void Widget::initConnect()
     connect(ui->settingBtn, &QPushButton::clicked, this, &Widget::config);
     //添加频道
     connect(ui->addChannelBtn, &QPushButton::clicked, this, &Widget::addChannel);
+    connect(ui->channelEdit, &QLineEdit::editingFinished, this, &Widget::addChannel);
     //添加服务器成功
     connect(this->client, &Client::addServerSuccess, this, &Widget::addServerItem);
     //接收新消息
@@ -77,6 +78,7 @@ void Widget::addChannel()
     {
         return;
     }
+    ui->addChannelBtn->setEnabled(false);
     //获取当前选中服务器
     int serverIndex = ui->serverList->currentRow();
     //发送JOIN信号
@@ -85,6 +87,7 @@ void Widget::addChannel()
 //添加频道对象
 void Widget::addChannelItem()
 {
+    ui->addChannelBtn->setEnabled(true);
     ui->channelEdit->clear();
     Server *server = client->getServer(ui->serverList->currentRow());
     ui->channelList->addItem(client->getChannel(server, client->getChannelNum(server) - 1)->getItem());
@@ -224,5 +227,6 @@ int Widget::OnExit()
 //频道加入失败
 void Widget::addChannelFail()
 {
+    ui->addChannelBtn->setEnabled(true);
     QMessageBox::information(this, tr("频道加入失败"), tr("该频道只有注册用户可以加入！"));
 }
