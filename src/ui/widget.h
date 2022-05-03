@@ -3,11 +3,11 @@
 #include "../irc/client.h"
 #include "config.h"
 #include "login.h"
-#include <QWidget>
-#include <QSystemTrayIcon>
-#include <QString>
-#include <QMenu>
 #include <QAction>
+#include <QMenu>
+#include <QString>
+#include <QSystemTrayIcon>
+#include <QWidget>
 
 namespace Ui
 {
@@ -17,6 +17,9 @@ class Widget;
 class Widget : public QWidget
 {
     Q_OBJECT
+  signals:
+    void updateTrayIconSignal();
+
   public:
     Client *client;     //客户端对象
     Login *loginPage;   //登录页
@@ -32,15 +35,14 @@ class Widget : public QWidget
     void refreshChannelList(); //刷新频道列表
     void refreshMessageList(); //刷新消息列表
     void initTrayIcon();       //初始化系统托盘
-public slots:
-    void updateTrayIcon();     //更新系统托盘
-    int OnSystemTrayClicked(QSystemTrayIcon::ActivationReason reason);//系统托盘事件
-    int OnExit();              //退出事件
-signals:
-    void updateTrayIconSignal();
     void addChannelFail();     //添加频道失败
     void addServerItem();      //添加服务器
     void addChannelItem();     //添加频道
+  public slots:
+    void updateTrayIcon();                                             //更新系统托盘
+    int OnSystemTrayClicked(QSystemTrayIcon::ActivationReason reason); //系统托盘事件
+    int OnExit();                                                      //退出事件
+
   private:
     Ui::Widget *ui;
     QSystemTrayIcon *col_trayIcon; //系统托盘
