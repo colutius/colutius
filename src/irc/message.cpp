@@ -67,7 +67,7 @@ void Message::parse()
         {
             this->sender = buf.at(2);
             this->nick = buf.at(0).split("!")[0].remove(":");
-            this->item = new QListWidgetItem(this->nick + " " + this->mainMsg);
+            this->item = new QListWidgetItem("[" + this->nick + "]" + " " + this->mainMsg);
         }
     }
 }

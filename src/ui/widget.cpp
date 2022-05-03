@@ -29,20 +29,18 @@ void Widget::initConnect()
     //添加频道成功
     connect(this->client, &Client::addChannelSuccess, this, &Widget::addChannelItem);
     //添加频道失败
-    connect(this->client, &Client::addChannelFail, this,
-            [this]() { QMessageBox::information(this, tr("频道加入失败"), tr("该频道只有注册用户可以加入！")); });
+    connect(this->client, &Client::addChannelFail, this, &Widget::addChannelFail);
     //添加系统托盘更新
     connect(this, &Widget::updateTrayIconSignal, this, &Widget::updateTrayIcon);
     //双击托盘关联
-    connect(col_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(OnSystemTrayClicked(QSystemTrayIcon::ActivationReason)));
-    //ExitAction关联
+    connect(col_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
+            SLOT(OnSystemTrayClicked(QSystemTrayIcon::ActivationReason)));
+    // ExitAction关联
     connect(exit, &QAction::triggered, this, &Widget::OnExit);
-    //MinAction关联
-    connect(min, &QAction::triggered, this, [=]{ this->showMinimized(); });
-    //MaxAction关联
-    connect(max, &QAction::triggered, this, [=]{ this->showMaximized(); });
-    connect(this->client, &Client::addChannelFail, this, &Widget::addChannelFail);
+    // MinAction关联
+    connect(min, &QAction::triggered, this, [=] { this->showMinimized(); });
+    // MaxAction关联
+    connect(max, &QAction::triggered, this, [=] { this->showMaximized(); });
     //切换服务器
     connect(ui->serverList, &QListWidget::currentItemChanged, this, &Widget::refreshChannelList);
     //切换频道
@@ -189,7 +187,7 @@ void Widget::initTrayIcon()
  */
 void Widget::updateTrayIcon()
 {
-    //TODO 从中间件获取服务器相应信息
+    // TODO 从中间件获取服务器相应信息
 
     QString tipString = "Colutius-XXX\n当前频道数:";
     tipString += QString::number(client->getServerNum());
