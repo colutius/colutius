@@ -4,6 +4,7 @@
 Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    this->setWindowIcon(QIcon(":/img/img/icon.svg"));
     initConnect();
 }
 Widget::~Widget()
