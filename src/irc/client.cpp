@@ -40,8 +40,18 @@ Message *Client::getMessage(Channel *channel, int index)
 }
 
 //添加服务器
-void Client::addServer()
+void Client::addServer(QString host, int port, QString nick, QString user, QString passwd)
 {
+    //构造新的服务器实例
+    auto *newServer = new Server(host, port, nick, user, passwd);
+    //添加到服务器列表
+    this->serverList.append(newServer);
+    //登录服务器
+    if (newServer->login())
+    {
+        //发射登录成功信号
+        emit addServerSuccess();
+    }
 }
 //添加频道
 void Client::addChannel()

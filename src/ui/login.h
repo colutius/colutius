@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../irc/client.h"
 #include <QDialog>
 
 namespace Ui
@@ -12,8 +13,13 @@ class Login : public QDialog
     Q_OBJECT
 
   public:
-    explicit Login(QWidget *parent = nullptr);
+    Client *client;
+    explicit Login(Client *client, QWidget *parent = nullptr);
     ~Login() override;
+
+    void initConnect(); //初始化信号槽
+    void addServer();   // 添加服务器
+    void success();     //登陆成功
 
   private:
     Ui::Login *ui;
