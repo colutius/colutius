@@ -22,7 +22,7 @@ int Client::getMessageNum(Channel *channel)
 //获取指定服务器对象
 Server *Client::getServer(int index)
 {
-    if (index < 0 || index > getServerNum())
+    if (index < 0 || index >= getServerNum())
     {
         qDebug() << "访问服务器列表索引超出范围！";
     }
@@ -52,10 +52,18 @@ void Client::addServer(QString host, int port, QString nick, QString user, QStri
         //发射登录成功信号
         qDebug() << "登录信息发送成功！";
         connect(newServer, &Server::success, this, [this]() { emit addServerSuccess(); });
-        connect(newServer, &Server::fail, this, [this]() { emit addServerFail(); });
+        connect(newServer, &Server::fail, this, [this]() {
+            this->serverList.removeLast();
+            emit addServerFail();
+        });
+        connect(newServer, &Server::get, this, [this]() { emit getNewMessage(); });
     }
 }
 //添加频道
-void Client::addChannel()
+void Client::addChannel(const QString &channelName, int serverIndex)
 {
+    Server *server = getServer(serverIndex);
+    server->addChannel(channelName);
+    connect(server, &Server::channelAddSuccess, this, [this]() { emit addChannelSuccess(); });
+    connect(server, &Server::channelAddFail, this, [this]() { emit addChannelFail(); });
 }

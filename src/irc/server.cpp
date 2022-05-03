@@ -50,10 +50,22 @@ int Server::getChannelNum()
 {
     return int(this->channelList.count());
 }
+//添加频道
+void Server::addChannel(const QString channelName)
+{
+    if (this->sendData("JOIN " + channelName))
+    {
+        qDebug() << "加入频道指令发送成功";
+        auto *newChannel = new Channel(channelName);
+        this->channelList.append(newChannel);
+        //加入失败时从列表中删除频道
+        connect(this, &Server::channelAddFail, this, [this]() { this->channelList.removeLast(); });
+    }
+}
 //获取指定频道对象
 Channel *Server::getChannel(int index)
 {
-    if (index < 0 || index > getChannelNum())
+    if (index < 0 || index >= getChannelNum())
     {
         qDebug() << "频道索引超出范围";
     }
@@ -123,6 +135,29 @@ void Server::receiveData()
             {
                 qDebug() << "登录失败！昵称被占用！";
                 emit fail();
+            }
+            else if (msg->getCommand() == "PRIVMSG")
+            {
+                qDebug() << "接收到一条用户消息";
+                foreach (Channel *channel, this->channelList)
+                {
+                    if (msg->getSender() == channel->getName())
+                    {
+                        qDebug() << channel->getName() + "频道收到新消息";
+                        channel->addMessage(msg);
+                        emit get();
+                    }
+                }
+            }
+            else if (msg->getCommand() == "366")
+            {
+                qDebug() << "频道加入成功！";
+                emit channelAddSuccess();
+            }
+            else if (msg->getCommand() == "477")
+            {
+                qDebug() << "频道加入失败，该频道只有注册用户可以加入！";
+                emit channelAddFail();
             }
             else
             {

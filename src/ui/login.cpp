@@ -52,4 +52,5 @@ void Login::success()
 void Login::fail()
 {
     ui->connectBtn->setEnabled(true);
+    QMessageBox::information(this, tr("登录失败"), tr("昵称被占用！"));
 }

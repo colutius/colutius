@@ -14,10 +14,16 @@ QString Message::getCommand()
 {
     return this->command;
 }
+QString Message::getSender()
+{
+    return this->sender;
+}
+//获取主要信息
 QString Message::getMainMsg()
 {
     return this->mainMsg;
 }
+//解析原始数据
 void Message::parse()
 {
     if (this->rawMsg.isEmpty())
@@ -28,7 +34,12 @@ void Message::parse()
     if (buf.at(0) == "PING")
     {
         this->command = "PING";
-        this->mainMsg = "PONG " + rawMsg;
+        this->mainMsg = rawMsg.replace("PING", "PONG");
+    }
+    else if (buf.at(0) == "ERROR")
+    {
+        this->command = "ERROR";
+        this->mainMsg = rawMsg;
     }
     else
     {
@@ -52,5 +63,15 @@ void Message::parse()
             }
             count++;
         }
+        if (this->command == "PRIVMSG")
+        {
+            this->sender = buf.at(2);
+            this->nick = buf.at(0).split("!~")[0].remove(":");
+            this->item = new QListWidgetItem(this->nick + " " + this->mainMsg);
+        }
     }
+}
+QListWidgetItem *Message::getItem()
+{
+    return this->item;
 }

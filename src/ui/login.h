@@ -2,6 +2,7 @@
 
 #include "../irc/client.h"
 #include <QDialog>
+#include <QMessageBox>
 
 namespace Ui
 {
