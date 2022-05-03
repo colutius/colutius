@@ -22,12 +22,12 @@ void Widget::initConnect()
     connect(ui->settingBtn, &QPushButton::clicked, this, &Widget::config);
     //添加频道
     connect(ui->addChannelBtn, &QPushButton::clicked, this, &Widget::addChannel);
-    //刷新服务器列表
-    connect(this->client, &Client::addServerSuccess, this, &Widget::refreshServerList);
+    //添加服务器成功
+    connect(this->client, &Client::addServerSuccess, this, &Widget::addServerItem);
     //接收新消息
     connect(this->client, &Client::getNewMessage, this, &Widget::addMsg);
     //添加频道成功
-    connect(this->client, &Client::addChannelSuccess, this, &Widget::refreshChannelList);
+    connect(this->client, &Client::addChannelSuccess, this, &Widget::addChannelItem);
     //添加频道失败
     connect(this->client, &Client::addChannelFail, this,
             [this]() { QMessageBox::information(this, tr("频道加入失败"), tr("该频道只有注册用户可以加入！")); });
@@ -42,6 +42,11 @@ void Widget::initConnect()
     connect(min, &QAction::triggered, this, [=]{ this->showMinimized(); });
     //MaxAction关联
     connect(max, &QAction::triggered, this, [=]{ this->showMaximized(); });
+    connect(this->client, &Client::addChannelFail, this, &Widget::addChannelFail);
+    //切换服务器
+    connect(ui->serverList, &QListWidget::currentItemChanged, this, &Widget::refreshChannelList);
+    //切换频道
+    connect(ui->channelList, &QListWidget::currentItemChanged, this, &Widget::refreshMessageList);
 }
 //打开登录对话框
 void Widget::login()
@@ -52,6 +57,12 @@ void Widget::login()
 void Widget::config()
 {
     this->configPage = new Config;
+}
+//添加服务器对象
+void Widget::addServerItem()
+{
+    ui->serverList->addItem(client->getServer(client->getServerNum() - 1)->getItem());
+    ui->serverList->setCurrentRow(client->getServerNum() - 1);
 }
 //添加频道
 void Widget::addChannel()
@@ -73,10 +84,23 @@ void Widget::addChannel()
     //发送JOIN信号
     client->addChannel(channel, serverIndex);
 }
+//添加频道对象
+void Widget::addChannelItem()
+{
+    ui->channelEdit->clear();
+    Server *server = client->getServer(ui->serverList->currentRow());
+    ui->channelList->addItem(client->getChannel(server, client->getChannelNum(server) - 1)->getItem());
+    ui->channelList->setCurrentRow(client->getChannelNum(server) - 1);
+}
 //添加消息
 void Widget::addMsg()
 {
     Server *server = client->getServer(ui->serverList->currentRow());
+    //如果当前频道列表为空，肯定不用处理
+    if (ui->channelList->currentRow() == -1)
+    {
+        return;
+    }
     Channel *channel = client->getChannel(server, ui->channelList->currentRow());
     int count = ui->msgList->count();
     //数量没变说明是其他频道的消息，不需要处理
@@ -89,52 +113,47 @@ void Widget::addMsg()
         ui->msgList->addItem(channel->getMessage(channel->getMessageNum() - 1)->getItem());
     }
 }
-//切换服务器
-void Widget::changeServer()
-{
-}
-//切换频道
-void Widget::changeChannel()
-{
-}
-//刷新服务器列表
-void Widget::refreshServerList()
-{
-    int count = ui->serverList->count();
-
-    while (count--)
-    {
-        ui->serverList->takeItem(0);
-    }
-
-    for (int i = 0; i < client->getServerNum(); i++)
-    {
-        ui->serverList->addItem(client->getServer(i)->getItem());
-        ui->serverList->setCurrentItem(client->getServer(i)->getItem());
-    }
-}
 //刷新频道列表
 void Widget::refreshChannelList()
 {
-    ui->channelEdit->clear();
+    //暂时屏蔽信号，防止没有执行完毕时刷新消息列表导致索引出错
+    ui->channelList->blockSignals(true);
+    qDebug() << "刷新频道列表";
     int count = ui->channelList->count();
 
     while (count--)
     {
         ui->channelList->takeItem(0);
     }
-
     Server *server = client->getServer(ui->serverList->currentRow());
-
     for (int i = 0; i < client->getChannelNum(server); i++)
     {
         ui->channelList->addItem(client->getChannel(server, i)->getItem());
-        ui->channelList->setCurrentItem(client->getChannel(server, i)->getItem());
     }
+    //解除屏蔽信号
+    ui->channelList->blockSignals(false);
+    ui->channelList->setCurrentRow(client->getChannelNum(server) - 1);
 }
 //刷新消息列表
 void Widget::refreshMessageList()
 {
+    qDebug() << "刷新消息列表";
+    int count = ui->msgList->count();
+
+    while (count--)
+    {
+        ui->msgList->takeItem(0);
+    }
+    if (ui->channelList->currentRow() == -1)
+    {
+        return;
+    }
+    Server *server = client->getServer(ui->serverList->currentRow());
+    Channel *channel = client->getChannel(server, ui->channelList->currentRow());
+    for (int i = 0; i < client->getMessageNum(channel); i++)
+    {
+        ui->msgList->addItem(client->getMessage(channel, i)->getItem());
+    }
 }
 
 /**
@@ -203,4 +222,9 @@ int Widget::OnExit()
 {
     QApplication::exit(0);
     return 0;
+}
+//频道加入失败
+void Widget::addChannelFail()
+{
+    QMessageBox::information(this, tr("频道加入失败"), tr("该频道只有注册用户可以加入！"));
 }

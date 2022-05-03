@@ -24,7 +24,10 @@ Server::~Server() = default;
 //初始化信号槽
 void Server::initConnect()
 {
+    //接收数据
     connect(&this->socket, &QTcpSocket::readyRead, this, &Server::receiveData);
+    //加入失败时从列表中删除频道
+    connect(this, &Server::channelAddFail, this, [this]() { this->channelList.removeLast(); });
 }
 //初始化item对象
 void Server::initItem()
@@ -58,8 +61,6 @@ void Server::addChannel(const QString channelName)
         qDebug() << "加入频道指令发送成功";
         auto *newChannel = new Channel(channelName);
         this->channelList.append(newChannel);
-        //加入失败时从列表中删除频道
-        connect(this, &Server::channelAddFail, this, [this]() { this->channelList.removeLast(); });
     }
 }
 //获取指定频道对象

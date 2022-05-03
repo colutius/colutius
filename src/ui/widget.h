@@ -29,9 +29,6 @@ class Widget : public QWidget
     void config();             //打开设置对话框
     void addChannel();         //添加频道
     void addMsg();             //添加消息
-    void changeServer();       //切换服务器
-    void changeChannel();      //切换频道
-    void refreshServerList();  //刷新服务器列表
     void refreshChannelList(); //刷新频道列表
     void refreshMessageList(); //刷新消息列表
     void initTrayIcon();       //初始化系统托盘
@@ -41,6 +38,9 @@ public slots:
     int OnExit();              //退出事件
 signals:
     void updateTrayIconSignal();
+    void addChannelFail();     //添加频道失败
+    void addServerItem();      //添加服务器
+    void addChannelItem();     //添加频道
   private:
     Ui::Widget *ui;
     QSystemTrayIcon *col_trayIcon; //系统托盘

@@ -66,7 +66,7 @@ void Message::parse()
         if (this->command == "PRIVMSG")
         {
             this->sender = buf.at(2);
-            this->nick = buf.at(0).split("!~")[0].remove(":");
+            this->nick = buf.at(0).split("!")[0].remove(":");
             this->item = new QListWidgetItem(this->nick + " " + this->mainMsg);
         }
     }
