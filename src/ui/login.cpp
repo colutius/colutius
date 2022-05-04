@@ -7,6 +7,7 @@ Login::Login(Client *client, QWidget *parent) : QDialog(parent), ui(new Ui::Logi
     this->setAttribute(Qt::WA_DeleteOnClose);
     this->client = client;
     ui->setupUi(this);
+    initUI();
     initConnect();
     //设置模态对话框
     this->setModal(true);
@@ -17,7 +18,14 @@ Login::~Login()
 {
     delete ui;
 }
-
+void Login::initUI()
+{
+    //设置qss样式
+    QFile qssFile(":/qss/qss/Login.qss");
+    qssFile.open(QFile::ReadOnly);
+    QString str = qssFile.readAll();
+    this->setStyleSheet(str);
+}
 void Login::initConnect()
 {
     //点击连接

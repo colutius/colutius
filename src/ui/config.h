@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QDialog>
+#include <QFile>
 
 namespace Ui
 {
@@ -14,6 +15,8 @@ class Config : public QDialog
   public:
     explicit Config(QWidget *parent = nullptr);
     ~Config() override;
+
+    void initUI();
 
   private:
     Ui::Config *ui;
