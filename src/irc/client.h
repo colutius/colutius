@@ -28,4 +28,5 @@ class Client : public QObject
     Message *getMessage(Channel *channel, int index);                                   //获取消息列表
     void addServer(QString host, int port, QString nick, QString user, QString passwd); //添加服务器
     void addChannel(const QString &channelName, int serverIndex);                       //添加频道
+    Message *sendMsg(Server *server, Channel *channel, QString msg);                    //发送消息
 };

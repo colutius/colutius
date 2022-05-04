@@ -56,10 +56,19 @@ int Server::getChannelNum()
 //添加频道
 void Server::addChannel(const QString channelName)
 {
-    if (this->sendData("JOIN " + channelName))
+    QString channel;
+    if (channelName[0] != '#')
+    {
+        channel = "#" + channelName;
+    }
+    else
+    {
+        channel = channelName;
+    }
+    if (this->sendData("JOIN " + channel))
     {
         qDebug() << "加入频道指令发送成功";
-        auto *newChannel = new Channel(channelName);
+        auto *newChannel = new Channel(channel);
         this->channelList.append(newChannel);
     }
 }

@@ -67,11 +67,19 @@ void Message::parse()
         {
             this->sender = buf.at(2);
             this->nick = buf.at(0).split("!")[0].remove(":");
-            this->item = new QListWidgetItem("[" + this->nick + "]" + " " + this->mainMsg);
+            this->item = new QListWidgetItem("[" + this->nick + "]-> " + this->mainMsg);
         }
     }
 }
 QListWidgetItem *Message::getItem()
 {
     return this->item;
+}
+void Message::setSendMsg(QString msg, QString to, QString nick)
+{
+    this->mainMsg = msg;
+    this->nick = nick;
+    this->sender = to;
+    this->item = new QListWidgetItem(this->mainMsg + " <-[" + this->nick + "]");
+    this->item->setTextAlignment(2);
 }

@@ -38,6 +38,7 @@ class Widget : public QWidget
     void addChannelFail();     //添加频道失败
     void addServerItem();      //添加服务器
     void addChannelItem();     //添加频道
+    void sendMsg();            //发送消息
   public slots:
     void updateTrayIcon();                                             //更新系统托盘
     int OnSystemTrayClicked(QSystemTrayIcon::ActivationReason reason); //系统托盘事件

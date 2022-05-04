@@ -21,4 +21,5 @@ class Message : public QObject
     QString getSender();            //获取消息发送者
     QString getMainMsg();           //获取主要信息
     void parse();                   //解析原始数据
+    void setSendMsg(QString msg, QString to, QString nick);
 };

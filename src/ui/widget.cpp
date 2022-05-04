@@ -5,7 +5,6 @@ Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
 {
     this->client = new Client;
     ui->setupUi(this);
-    this->setWindowIcon(QIcon(":/img/img/icon.svg"));
     initTrayIcon();
     initConnect();
 }
@@ -20,6 +19,9 @@ void Widget::initConnect()
     connect(ui->addServerBtn, &QPushButton::clicked, this, &Widget::login);
     //打开设置页
     connect(ui->settingBtn, &QPushButton::clicked, this, &Widget::config);
+    //发送消息
+    connect(ui->sendBtn, &QPushButton::clicked, this, &Widget::sendMsg);
+    connect(ui->msgEdit, &QLineEdit::editingFinished, this, &Widget::sendMsg);
     //添加频道
     connect(ui->addChannelBtn, &QPushButton::clicked, this, &Widget::addChannel);
     connect(ui->channelEdit, &QLineEdit::editingFinished, this, &Widget::addChannel);
@@ -229,4 +231,18 @@ void Widget::addChannelFail()
 {
     ui->addChannelBtn->setEnabled(true);
     QMessageBox::information(this, tr("频道加入失败"), tr("该频道只有注册用户可以加入！"));
+}
+//发送消息
+void Widget::sendMsg()
+{
+    QString msg = ui->msgEdit->text();
+    if (msg.isEmpty())
+    {
+        return;
+    }
+    ui->msgEdit->clear();
+    Server *server = client->getServer(ui->serverList->currentRow());
+    Channel *channel = client->getChannel(server, ui->channelList->currentRow());
+    Message *message = client->sendMsg(server, channel, msg);
+    ui->msgList->addItem(message->getItem());
 }

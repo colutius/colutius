@@ -38,10 +38,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resource/resource.qrc
+    resource/resource.qrc\
 
 DISTFILES += \
-    resource/img/logo.rc
+    resource/img/logo.rc\
 
 RC_FILE += \
-    resource/img/logo.rc
+    resource/img/logo.rc\
