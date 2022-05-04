@@ -4,6 +4,7 @@
 #include "config.h"
 #include "login.h"
 #include <QAction>
+#include <QFile>
 #include <QMenu>
 #include <QString>
 #include <QSystemTrayIcon>
@@ -26,7 +27,7 @@ class Widget : public QWidget
     Config *configPage; //设置页
     explicit Widget(QWidget *parent = nullptr);
     ~Widget() override;
-
+    void initUI();             //初始化界面
     void initConnect();        //初始化信号槽
     void login();              //打开登录对话框
     void config();             //打开设置对话框
