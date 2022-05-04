@@ -47,13 +47,13 @@ make
 
 
 [windows-link]: https://github.com/colutius/colutius/actions/workflows/Windows.yml
-[windows-badge]: https://github.com/colutius/colutius/actions/workflows/Windows.yml/badge.svg
+[windows-badge]: https://github.com/colutius/colutius_old/actions/workflows/Windows.yml/badge.svg
 
 [linux-link]: https://github.com/colutius/colutius/actions/workflows/Linux.yml
-[linux-badge]: https://github.com/colutius/colutius/actions/workflows/Linux.yml/badge.svg
+[linux-badge]: https://github.com/colutius/colutius_old/actions/workflows/Linux.yml/badge.svg
 
 [macos-link]: https://github.com/colutius/colutius/actions/workflows/MacOS.yml
-[macos-badge]: https://github.com/colutius/colutius/actions/workflows/MacOS.yml/badge.svg
+[macos-badge]: https://github.com/colutius/colutius_old/actions/workflows/MacOS.yml/badge.svg
 
 [backup-link]: https://github.com/colutius/colutius/actions/workflows/backup.yml
 [backup-badge]: https://github.com/colutius/colutius/actions/workflows/backup.yml/badge.svg
