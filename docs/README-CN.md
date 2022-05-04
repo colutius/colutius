@@ -19,9 +19,9 @@
 
 ## 自动化构建状态
 
-|[Linux][linux-link]|[Windows][windows-link]|[MacOS][macos-link]|
-|-------------------|-----------------------|-------------------|
-|![linux-badge] |![windows-badge] |![macos-badge] |
+|[Linux][linux-link]|[Windows][windows-link]|[MacOS][macos-link]|[备份][backup-link]|
+|-------------------|-----------------------|-------------------|-------------------|
+|![linux-badge] |![windows-badge] |![macos-badge] |![backup-badge] |
 
 |[License][license-link]| [Release][release-link]| [Download][download-link] | [Stars][stars-link] |
 |-------------------|-----------------------|-------------------|------------|
@@ -53,6 +53,9 @@ make
 
 [macos-link]: https://github.com/colutius/colutius/actions/workflows/MacOS.yml
 [macos-badge]: https://github.com/colutius/colutius/actions/workflows/MacOS.yml/badge.svg
+
+[backup-link]: https://github.com/colutius/colutius/actions/workflows/backup.yml
+[backup-badge]: https://github.com/colutius/colutius/actions/workflows/backup.yml/badge.svg
 
 [release-link]: https://github.com/colutius/colutius/releases
 [release-badge]: https://img.shields.io/github/v/release/colutius/colutius
