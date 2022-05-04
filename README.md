@@ -16,7 +16,8 @@ Welcome to the
   qDebug() << "Hello Colutius!";
 ```
 ### A cross-platform, easy-to-use, beautiful IRC client
-
+## Screenshot
+![](asset/img/1.png)
 ## Automate builds
 
 |[Linux][linux-link]|[Windows][windows-link]|[MacOS][macos-link]|[Backup][backup-link]|
