@@ -30,7 +30,7 @@ void Widget::initUI()
     ui->settingBtn->setFont(iconfont);
     ui->settingBtn->setText(QChar(0xe8b8));
     //设置qss样式
-    QFile qssFile(":/qss/Widget.qss");
+    QFile qssFile(":/qss/qss/Widget.qss");
     qssFile.open(QFile::ReadOnly);
     QString str = qssFile.readAll();
     this->setStyleSheet(str);
@@ -260,6 +260,10 @@ void Widget::sendMsg()
 {
     QString msg = ui->msgEdit->text();
     if (msg.isEmpty())
+    {
+        return;
+    }
+    if (ui->serverList->currentRow() == -1 || ui->channelList->currentRow() == -1)
     {
         return;
     }

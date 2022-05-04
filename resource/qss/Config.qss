@@ -1,0 +1,33 @@
+#Config {
+background-color:#ededf5;
+}
+QGroupBox {
+color: #626262;
+border-width:2px;
+border-color:#dddddd;
+border-style:solid;
+}
+QLabel {
+color: #626262;
+}
+
+/* 添加频道按钮样式 */
+QComboBox {
+border-style:solid;
+border-width:2px;
+border-color:#dddddd;
+border-radius:10px;
+background-color:#ececec;
+color:#626262;
+height:40px;
+font-size:20px;
+}
+QComboBox::drop-down {
+background-color:transparent;
+color:#626262;
+border-radius:10px;
+}
+QComboBox::drop-arrow {
+background-color:transparent;
+color:#626262;
+}

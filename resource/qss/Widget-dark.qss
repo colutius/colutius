@@ -1,5 +1,5 @@
 /* 主界面样式，设置背景色 */
-#MainWidget {
+#Widget {
 background-color:#343434;
 }
 
@@ -53,11 +53,12 @@ border-left: 3px solid #828282;
 /* 选中 */
 #serverList::item:selected {
 background-color: transparent;
+color:#ff5656;
 border-left: 3px solid #828282;
 }
 
 /* 频道列表样式 */
-#channelList{
+#channelList,#msgList{
 color:#eeeeee;
 border-style: none;
 background-color:#2e2f30;
@@ -65,17 +66,17 @@ border-radius: 10px;
 }
 /* 频道列表Item样式 */
 /* 常规 */
-#channelList::item {
+#channelList::item ,#msgList::item{
 border-radius: 10px;
 height:40px;
 }
 /* 指向 */
-#channelList::item:hover {
+#channelList::item:hover,#msgList::item:hover {
 border-radius: 10px;
 background-color: #333333;
 }
 /* 选中 */
-#channelList::item:selected {
+#channelList::item:selected,#msgList::item:selected {
 border-radius: 10px;
 background-color: #444444;
 }
