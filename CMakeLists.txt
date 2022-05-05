@@ -21,6 +21,8 @@ add_executable(${PROJECT_NAME}
         src/ui/config.cpp 
         src/ui/config.h 
         src/ui/config.ui
+        src/ui/bochatwidget.h
+        src/ui/bochatwidget.cpp
 
         src/irc/client.cpp
         src/irc/client.h
@@ -29,7 +31,9 @@ add_executable(${PROJECT_NAME}
         src/irc/channel.cpp 
         src/irc/channel.h 
         src/irc/message.cpp 
-        src/irc/message.h 
+        src/irc/message.h
+        src/irc/fileio.h
+        src/irc/fileio.cpp 
 
         resource/resource.qrc
         resource/img/logo.rc
