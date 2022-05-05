@@ -66,6 +66,7 @@ border-radius: 10px;
 #channelList::item ,#msgList::item{
 border-radius: 10px;
 color:#626262;
+font-size:16px;
 min-height:40px;
 }
 /* 指向 */
@@ -73,12 +74,14 @@ min-height:40px;
 border-radius: 10px;
 color:#626262;
 background-color: #e0e0e0;
+font-size:16px;
 }
 /* 选中 */
 #channelList::item:selected,#msgList::item:selected {
 border-radius: 10px;
 color:#626262;
 background-color: #bbb0cf;
+font-size:16px;
 }
 /* 添加频道按钮样式 */
 #addChannelBtn {
