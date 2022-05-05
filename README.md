@@ -21,7 +21,7 @@ Welcome to the
 
 ## How to download
 
-Click to [Download]("https://github.com/colutius/colutius/releases")
+Click to [Download](https://github.com/colutius/colutius/releases)
 
 ## Automate builds
 
