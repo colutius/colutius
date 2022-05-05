@@ -8,24 +8,23 @@ systemTrayIcon::systemTrayIcon(Widget *widget, QSystemTrayIcon *parent)
 }
 systemTrayIcon::~systemTrayIcon()
 {
-    max->deleteLater();
-    min->deleteLater();
-    systemTrayIconMenu->deleteLater();
+    config->deleteLater();
+    start->deleteLater();
     exit->deleteLater();
+    systemTrayIconMenu->deleteLater();
 }
 void systemTrayIcon::initConnect()
 {
     //添加系统托盘更新
     connect(this, &systemTrayIcon::updateTrayIconSignal, this, &systemTrayIcon::updateTrayIcon);
     //双击托盘关联
-    connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
-            SLOT(OnSystemTrayClicked(QSystemTrayIcon::ActivationReason)));
-    // ExitAction关联
+    connect(this, &systemTrayIcon::activated, this, &systemTrayIcon::showMainWidget);
+    //退出
     connect(exit, &QAction::triggered, this, &systemTrayIcon::OnExit);
-    // MinAction关联
-    connect(min, &QAction::triggered, this, [=] { widget->showMinimized(); });
-    // MaxAction关联
-    connect(max, &QAction::triggered, this, [=] { widget->showMaximized(); });
+    //显示配置界面
+    connect(config, &QAction::triggered, this, &systemTrayIcon::showConfigPage);
+    //显示主界面
+    connect(start, &QAction::triggered, this, &systemTrayIcon::showMainWidget);
 }
 void systemTrayIcon::initTrayIcon()
 {
@@ -35,15 +34,15 @@ void systemTrayIcon::initTrayIcon()
 
     //添加菜单
     systemTrayIconMenu = new QMenu();
-    min = new QAction();
+    config = new QAction();
     exit = new QAction();
-    max = new QAction();
-    min->setText("最小化程序");
+    start = new QAction();
+    start->setText("显示主界面");
+    config->setText("配置");
     exit->setText("退出");
-    max->setText("最大化程序");
     //添加活动
-    systemTrayIconMenu->addAction(min);
-    systemTrayIconMenu->addAction(max);
+    systemTrayIconMenu->addAction(start);
+    systemTrayIconMenu->addAction(config);
     systemTrayIconMenu->addAction(exit);
     this->setContextMenu(systemTrayIconMenu);
 }
@@ -53,13 +52,10 @@ void systemTrayIcon::OnExit()
     qApp->exit(0);
 }
 
-void systemTrayIcon::OnSystemTrayClicked(QSystemTrayIcon::ActivationReason reason)
+void systemTrayIcon::showMainWidget()
 {
-    if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::DoubleClick)
-    {
-        // 显示主窗口
-        widget->showNormal();
-    }
+    //显示主窗口
+    widget->showNormal();
 }
 void systemTrayIcon::updateTrayIcon()
 {
@@ -71,4 +67,9 @@ void systemTrayIcon::updateTrayIcon()
     tipString += QString::number(10);
     tipString += "\n";
     this->setToolTip(tipString);
+}
+
+void systemTrayIcon::showConfigPage()
+{
+    widget->config();
 }

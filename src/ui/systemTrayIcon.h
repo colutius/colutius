@@ -14,15 +14,16 @@ class systemTrayIcon : public QSystemTrayIcon
   public:
     Widget *widget;
     QMenu *systemTrayIconMenu;
-    QAction *min;
-    QAction *max;
+    QAction *config;
     QAction *exit;
+    QAction *start;
     explicit systemTrayIcon(Widget *widget, QSystemTrayIcon *parent = nullptr);
     ~systemTrayIcon() override;
 
-    void initTrayIcon();
-    void initConnect();
-    void OnExit();
-    void OnSystemTrayClicked(QSystemTrayIcon::ActivationReason reason);
-    void updateTrayIcon();
+    void initTrayIcon();   //初始化托盘图标
+    void initConnect();    //初始化信号槽
+    void OnExit();         //退出程序
+    void showMainWidget(); //显示主界面
+    void updateTrayIcon(); //更新托盘图标
+    void showConfigPage(); //显示配置界面
 };
