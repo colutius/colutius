@@ -18,8 +18,6 @@ class Widget;
 class Widget : public QWidget
 {
     Q_OBJECT
-  signals:
-    void updateTrayIconSignal();
 
   public:
     Client *client;     //客户端对象
@@ -35,21 +33,11 @@ class Widget : public QWidget
     void addMsg();             //添加消息
     void refreshChannelList(); //刷新频道列表
     void refreshMessageList(); //刷新消息列表
-    void initTrayIcon();       //初始化系统托盘
     void addChannelFail();     //添加频道失败
     void addServerItem();      //添加服务器
     void addChannelItem();     //添加频道
     void sendMsg();            //发送消息
-  public slots:
-    void updateTrayIcon();                                             //更新系统托盘
-    int OnSystemTrayClicked(QSystemTrayIcon::ActivationReason reason); //系统托盘事件
-    int OnExit();                                                      //退出事件
 
   private:
     Ui::Widget *ui;
-    QSystemTrayIcon *col_trayIcon; //系统托盘
-    QMenu *systemTrayIconMenu;     //托盘菜单
-    QAction *min;                  //最小化动作
-    QAction *exit;                 //退出动作
-    QAction *max;                  //最大化
 };

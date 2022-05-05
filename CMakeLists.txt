@@ -15,11 +15,11 @@ add_executable(${PROJECT_NAME}
         src/ui/widget.cpp
         src/ui/widget.h
         src/ui/widget.ui
-        src/ui/login.cpp 
-        src/ui/login.h 
-        src/ui/login.ui 
-        src/ui/config.cpp 
-        src/ui/config.h 
+        src/ui/login.cpp
+        src/ui/login.h
+        src/ui/login.ui
+        src/ui/config.cpp
+        src/ui/config.h
         src/ui/config.ui
         src/ui/bochatwidget.h
         src/ui/bochatwidget.cpp
@@ -33,11 +33,16 @@ add_executable(${PROJECT_NAME}
         src/irc/message.cpp 
         src/irc/message.h
         src/irc/fileio.h
-        src/irc/fileio.cpp 
+        src/irc/fileio.cpp
+        src/irc/server.h
+        src/irc/channel.cpp
+        src/irc/channel.h
+        src/irc/message.cpp
+        src/irc/message.h
 
         resource/resource.qrc
         resource/img/logo.rc
-        )
+        src/ui/systemTrayIcon.cpp src/ui/systemTrayIcon.h)
 
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
