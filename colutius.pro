@@ -9,20 +9,24 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/irc/fileio.cpp \
     src/main.cpp \
     src/irc/server.cpp \
     src/irc/channel.cpp \
     src/irc/message.cpp \
     src/irc/client.cpp\
+    src/ui/bochatwidget.cpp \
     src/ui/config.cpp \
     src/ui/login.cpp \
     src/ui/widget.cpp \
 
 HEADERS += \
+    src/irc/fileio.h \
     src/irc/server.h \
     src/irc/channel.h \
     src/irc/message.h \
     src/irc/client.h \
+    src/ui/bochatwidget.h \
     src/ui/config.h \
     src/ui/login.h \
     src/ui/widget.h \
