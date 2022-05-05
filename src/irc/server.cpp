@@ -56,20 +56,21 @@ int Server::getChannelNum()
 //添加频道
 void Server::addChannel(const QString channelName)
 {
-    QString channel;
+    //没有#说明是私信，不需要join
     if (channelName[0] != '#')
     {
-        channel = "#" + channelName;
+        auto *newChannel = new Channel(channelName);
+        this->channelList.append(newChannel);
+        emit channelAddSuccess();
     }
     else
     {
-        channel = channelName;
-    }
-    if (this->sendData("JOIN " + channel))
-    {
-        qDebug() << "加入频道指令发送成功";
-        auto *newChannel = new Channel(channel);
-        this->channelList.append(newChannel);
+        if (this->sendData("JOIN " + channelName))
+        {
+            qDebug() << "加入频道指令发送成功";
+            auto *newChannel = new Channel(channelName);
+            this->channelList.append(newChannel);
+        }
     }
 }
 //获取指定频道对象
@@ -130,6 +131,10 @@ void Server::receiveData()
             msg->setrawMsg(i);
             //解析消息
             msg->parse();
+            if (msg->sender == this->nick)
+            {
+                msg->sender = msg->nick;
+            }
             //回应PING
             if (msg->getCommand() == "PING")
             {
@@ -148,7 +153,7 @@ void Server::receiveData()
             }
             else if (msg->getCommand() == "PRIVMSG")
             {
-                qDebug() << "接收到一条用户消息";
+                qDebug() << "接收到一条用户消息" + msg->rawMsg;
                 foreach (Channel *channel, this->channelList)
                 {
                     if (msg->getSender() == channel->getName())
@@ -156,8 +161,14 @@ void Server::receiveData()
                         qDebug() << channel->getName() + "频道收到新消息";
                         channel->addMessage(msg);
                         emit get();
+                        return;
                     }
                 }
+                //能执行到这儿说明是陌生人的消息
+                this->addChannel(msg->getSender());
+                qDebug() << this->getChannel(this->getChannelNum() - 1)->getName() + "频道收到新消息";
+                this->getChannel(this->getChannelNum() - 1)->addMessage(msg);
+                emit get();
             }
             else if (msg->getCommand() == "366")
             {

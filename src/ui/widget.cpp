@@ -94,7 +94,7 @@ void Widget::addChannel()
     ui->addChannelBtn->setEnabled(false);
     //获取当前选中服务器
     int serverIndex = ui->serverList->currentRow();
-    //发送JOIN信号
+    //添加频道
     client->addChannel(channel, serverIndex);
 }
 //添加频道对象
@@ -180,17 +180,27 @@ void Widget::addChannelFail()
 void Widget::sendMsg()
 {
     QString msg = ui->msgEdit->text();
+    //输入框为空
     if (msg.isEmpty())
     {
         return;
     }
+    //没有可用的服务器或频道
     if (ui->serverList->currentRow() == -1 || ui->channelList->currentRow() == -1)
     {
         return;
     }
+    //清空输入框
     ui->msgEdit->clear();
     Server *server = client->getServer(ui->serverList->currentRow());
     Channel *channel = client->getChannel(server, ui->channelList->currentRow());
     Message *message = client->sendMsg(server, channel, msg);
-    ui->msgList->addItem(message->getItem());
+    if (message->getCommand() == "/msg")
+    {
+        this->refreshChannelList();
+    }
+    else
+    {
+        ui->msgList->addItem(message->getItem());
+    }
 }

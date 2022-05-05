@@ -71,8 +71,18 @@ void Client::addChannel(const QString &channelName, int serverIndex)
 Message *Client::sendMsg(Server *server, Channel *channel, QString msg)
 {
     Message *message = new Message();
-    message->setSendMsg(msg, channel->getName(), server->nick);
-    server->sendData("PRIVMSG " + channel->getName() + " :" + message->getMainMsg());
-    channel->addMessage(message);
-    return message;
+    message->setrawMsg(msg);
+    message->parseSend(msg, channel->getName(), server->nick);
+    if (message->command == "/msg")
+    {
+        server->sendData("PRIVMSG " + message->getSender() + " :" + message->getMainMsg());
+        server->addChannel(message->getSender());
+        return message;
+    }
+    else
+    {
+        server->sendData("PRIVMSG " + channel->getName() + " :" + message->getMainMsg());
+        channel->addMessage(message);
+        return message;
+    }
 }

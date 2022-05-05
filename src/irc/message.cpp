@@ -65,21 +65,44 @@ void Message::parse()
         }
         if (this->command == "PRIVMSG")
         {
+
             this->sender = buf.at(2);
             this->nick = buf.at(0).split("!")[0].remove(":");
             this->item = new QListWidgetItem("[" + this->nick + "]-> " + this->mainMsg);
         }
     }
 }
+//获取消息对象
 QListWidgetItem *Message::getItem()
 {
     return this->item;
 }
-void Message::setSendMsg(QString msg, QString to, QString nick)
+//解析需发送消息
+void Message::parseSend(QString msg, QString to, QString nick)
 {
-    this->mainMsg = msg;
-    this->nick = nick;
-    this->sender = to;
-    this->item = new QListWidgetItem(this->mainMsg + " <-[" + this->nick + "]");
-    this->item->setTextAlignment(2);
+    QStringList buf = msg.split(" ");
+    if (buf[0] == "/msg")
+    {
+        this->command = "/msg";
+        this->sender = buf[1];
+        this->nick = nick;
+        int count = 0;
+        foreach (QString i, buf)
+        {
+            if (count > 1)
+            {
+                this->mainMsg += i + " ";
+            }
+            count++;
+        }
+        this->item = new QListWidgetItem(this->mainMsg + " <-[" + this->nick + "]");
+    }
+    else
+    {
+        this->mainMsg = msg;
+        this->nick = nick;
+        this->sender = to;
+        this->item = new QListWidgetItem(this->mainMsg + " <-[" + this->nick + "]");
+        this->item->setTextAlignment(2);
+    }
 }
