@@ -1,4 +1,5 @@
 #include "server.h"
+
 QChar getFontID(QChar letter);
 Server::Server(QString host, int port, QString nick, QString user, QString passwd, QObject *parent)
 {
@@ -149,6 +150,11 @@ void Server::receiveData()
             else if (msg->getCommand() == "433")
             {
                 qDebug() << "登录失败！昵称被占用！";
+                emit fail();
+            }
+            else if (msg->getCommand() == "ERROR")
+            {
+                qDebug() << "登录失败！";
                 emit fail();
             }
             else if (msg->getCommand() == "PRIVMSG")

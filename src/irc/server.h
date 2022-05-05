@@ -4,10 +4,12 @@
 #include "message.h"
 #include <QDebug>
 #include <QFontDatabase>
+#include <QHostInfo>
 #include <QListWidgetItem>
 #include <QObject>
 #include <QRandomGenerator>
 #include <QTcpSocket>
+
 class Server : public QObject
 {
     Q_OBJECT

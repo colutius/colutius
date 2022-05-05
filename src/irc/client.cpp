@@ -1,4 +1,5 @@
 #include "client.h"
+#include <QHostInfo>
 
 Client::Client(QObject *parent)
 {
