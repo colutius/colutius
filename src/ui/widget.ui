@@ -173,10 +173,10 @@
      <item>
       <widget class="QListWidget" name="msgList">
        <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustIgnored</enum>
+        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
        </property>
        <property name="isWrapping" stdset="0">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="resizeMode">
         <enum>QListView::Adjust</enum>
