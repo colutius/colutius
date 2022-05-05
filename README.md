@@ -18,6 +18,11 @@ Welcome to the
 ### A cross-platform, easy-to-use, beautiful IRC client
 ## Screenshot
 ![](asset/img/1.png)
+
+## How to download
+
+Click to [Download]("https://github.com/colutius/colutius/releases")
+
 ## Automate builds
 
 |[Linux][linux-link]|[Windows][windows-link]|[MacOS][macos-link]|[Backup][backup-link]|
