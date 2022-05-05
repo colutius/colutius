@@ -9,8 +9,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    src/irc/fileio.cpp \
     src/main.cpp \
+    src/irc/fileio.cpp \
     src/irc/server.cpp \
     src/irc/channel.cpp \
     src/irc/message.cpp \
@@ -19,6 +19,7 @@ SOURCES += \
     src/ui/config.cpp \
     src/ui/login.cpp \
     src/ui/widget.cpp \
+    src/ui/systemTrayIcon.cpp \
 
 HEADERS += \
     src/irc/fileio.h \
@@ -30,6 +31,7 @@ HEADERS += \
     src/ui/config.h \
     src/ui/login.h \
     src/ui/widget.h \
+    src/ui/systemTrayIcon.h \
 
 FORMS += \
     src/ui/config.ui \
