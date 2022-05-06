@@ -29,10 +29,6 @@
 ## 软件截图
 ![](../asset/img/1.png)
 
-## 如何下载
-
-点击[下载链接](https://github.com/colutius/colutius/releases)
-
 ## 手动构建
 - 克隆仓库
 ```bash
