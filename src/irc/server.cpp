@@ -3,6 +3,7 @@
 QChar getFontID(QChar letter);
 Server::Server(QString host, int port, QString nick, QString user, QString passwd, QObject *parent)
 {
+
     this->host = host;
     this->port = port;
     this->nick = nick;
@@ -160,7 +161,13 @@ void Server::receiveData()
             }
             else if (msg->getCommand() == "PRIVMSG")
             {
-                qDebug() << "接收到一条用户消息" + msg->rawMsg;
+                qDebug() << "接收到一条用户消息";
+#ifdef __linux__
+                QString notify = "notify-send '" + msg->getSender() + "'  '" + msg->getMainMsg() + "' " + "-t 10000";
+                system(notify.toStdString().data());
+#elif __WIN32__
+// windows 系统通知
+#endif
                 foreach (Channel *channel, this->channelList)
                 {
                     if (msg->getSender() == channel->getName())

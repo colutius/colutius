@@ -3,7 +3,7 @@
 
 Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget)
 {
-    this->client = new Client;
+    this->client = new Client();
     ui->setupUi(this);
     initUI();
     initConnect();
