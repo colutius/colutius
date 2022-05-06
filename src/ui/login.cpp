@@ -48,6 +48,7 @@ void Login::addServer()
     {
         qDebug() << "输入信息不完整";
         ui->connectBtn->setEnabled(true);
+        return;
     }
     client->addServer(host, port.toInt(), nick, user, passwd);
 }

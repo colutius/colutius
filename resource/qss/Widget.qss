@@ -2,7 +2,12 @@
 #Widget {
 background-color:#ededf5;
 }
-
+QToolTip {
+border-style:none;
+border-radius:10px;
+background-color:#dddddd;
+color:#626262;
+}
 /* 主界面图标按钮样式，取消边框 */
 #addServerBtn, #sendBtn, #settingBtn {
 font-size: 40px;

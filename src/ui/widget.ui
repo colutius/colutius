@@ -159,6 +159,15 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="statusTip">
+          <string/>
+         </property>
+         <property name="whatsThis">
+          <string/>
+         </property>
          <property name="text">
           <string>添加频道</string>
          </property>

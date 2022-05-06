@@ -35,6 +35,7 @@ void Server::initItem()
 {
     //初始化item实例
     this->serverItem = new QListWidgetItem;
+    serverItem->setToolTip("地址:" + this->host + "\n" + "昵称:" + this->nick);
     //初始化字母字体
     int fontId = QFontDatabase::addApplicationFont(":/font/iconfont/letter.ttf");
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
