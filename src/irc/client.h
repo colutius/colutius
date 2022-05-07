@@ -29,4 +29,10 @@ class Client : public QObject
     void addServer(QString host, int port, QString nick, QString user, QString passwd); //添加服务器
     void addChannel(const QString &channelName, int serverIndex);                       //添加频道
     Message *sendMsg(Server *server, Channel *channel, QString msg);                    //发送消息
+    //void rmServer(const QString serverName);                                            //删除服务器（通过名称）
+    void rmServer(const int serverIndex);                                               //删除服务器（通过索引）
+    //void rmServer(Server &server);                                                      //删除服务器（通过引用）
+    //void rmChannel(Server &server, const QString channelName);                          //删除频道（通过引用服务器，频道名称）
+    void rmChannel(Server &server, const int channelIndex);                             //删除频道（通过引用服务器，频道索引）
+    void rmChannel(const int serverIndex, const int channelIndex);                      //删除频道（通过服务器索引，频道索引）
 };

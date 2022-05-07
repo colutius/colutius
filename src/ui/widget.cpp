@@ -204,3 +204,13 @@ void Widget::sendMsg()
         ui->msgList->addItem(message->getItem());
     }
 }
+
+void Widget::rmServer()
+{
+    client->rmServer(ui->serverList->currentRow());
+}
+
+void Widget::rmChannel()
+{
+    client->rmChannel(ui->serverList->currentRow(), ui->channelList->currentRow());
+}
