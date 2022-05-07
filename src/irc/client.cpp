@@ -87,3 +87,30 @@ Message *Client::sendMsg(Server *server, Channel *channel, QString msg)
         return message;
     }
 }
+
+void Client::rmServer(int serverIndex)
+{
+    if (!serverList.contains(getServer(serverIndex)))
+    {
+        return;
+    }
+    serverList.removeAt(serverIndex);
+}
+
+//void Client::rmChannel(Server &server, const int channelIndex) //需要重载Server的opterator==
+//{
+//    if (!serverList.contains(server))
+//    {
+//        return;
+//    }
+//    server.rmChannel(channelIndex);
+//}
+
+void Client::rmChannel(const int serverIndex, const int channelIndex)
+{
+    if (!serverList.contains(getServer(serverIndex)))
+    {
+        return;
+    }
+    serverList.at(serverIndex)->channelList.removeAt(channelIndex);
+}

@@ -42,4 +42,8 @@ class Server : public QObject
     int sendData(const QString &data);          //发送数据
     bool login();                               //连接并登录服务器
     void receiveData();                         //接收数据
+    //void rmChannel(const QString channelName);  //删除频道
+    void rmChannel(const int channelIndex);     //删除频道
+
+    //bool operator == (const Server server) {};
 };

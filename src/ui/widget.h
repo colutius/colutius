@@ -37,6 +37,8 @@ class Widget : public QWidget
     void addServerItem();      //添加服务器
     void addChannelItem();     //添加频道
     void sendMsg();            //发送消息
+    void rmServer();           //删除频道
+    void rmChannel();          //删除频道
 
   private:
     Ui::Widget *ui;

@@ -23,4 +23,13 @@ class Channel : public QObject
     int getMessageNum();            //获取消息数量
     Message *getMessage(int index); //获取指定消息对象
     void addMessage(Message *msg);  //添加消息
+
+    bool operator == (const Channel &channel) //根据频道名称来区别不同频道
+    {
+        if (this->name == channel.name)
+        {
+            return true;
+        }
+        return false;
+    };
 };

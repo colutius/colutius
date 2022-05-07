@@ -262,3 +262,13 @@ QChar getFontID(QChar letter)
         return QChar(0xeb94);
     }
 }
+
+void Server::rmChannel(const int channelIndex)
+{
+    if (!channelList.contains(getChannel(channelIndex)))
+    {
+        return;
+    }
+
+    channelList.removeAt(channelIndex);
+}
