@@ -1,9 +1,9 @@
 # Colutius
 <img src="asset/img/colutius.png" width="10%">
 
-[[English](https://github.com/colutius/colutius#colutius)] [[中文](docs/README-CN.md)]
+[[English](docs/README-EN.md/#colutius)]
 
-Welcome to the
+### 欢迎使用
 
 ```c++
    _____      _       _   _           
@@ -15,38 +15,38 @@ Welcome to the
   
   qDebug() << "Hello Colutius!";
 ```
-### A cross-platform, easy-to-use, beautiful IRC client
-## Screenshot
-![](asset/img/1.png)
 
-## Automate builds
+### 一个跨平台，易用，美观的IRC客户端
 
-|[Linux][linux-link]|[Windows][windows-link]|[MacOS][macos-link]|[Backup][backup-link]|
+## 自动化构建状态
+
+|[Linux][linux-link]|[Windows][windows-link]|[MacOS][macos-link]|[备份][backup-link]|
 |-------------------|-----------------------|-------------------|-------------------|
 |![linux-badge] |![windows-badge] |![macos-badge] |![backup-badge] |
 
 |[License][license-link]| [Release][release-link]| [Download][download-link] | [Stars][stars-link] |
 |-------------------|-----------------------|-------------------|------------|
 |![license-badge] |![release-badge] |![download-badge] |![stars-badge] |
+## 软件截图
+![](asset/img/1.png)
 
-## Build manually
-- Clone the repository
+## 手动构建
+- 克隆仓库
 ```bash
 git clone https://github.com/colutius/colutius.git
 cd colutius
 ```
-- Start build
+- 开始构建
 ```bash
 mkdir build
 cd build
 cmake ..
 make
 ```
-- Run the program
+- 运行软件
 ```bash
 ./colutius
 ```
-
 
 [windows-link]: https://github.com/colutius/colutius/actions/workflows/Windows.yml
 [windows-badge]: https://github.com/colutius/colutius/actions/workflows/Windows.yml/badge.svg
