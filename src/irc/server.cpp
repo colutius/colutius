@@ -263,15 +263,6 @@ QChar getFontID(QChar letter)
     }
 }
 
-//void Server::rmChannel(const QString channelName) //未完成
-//{
-//    if (!channelList.contains(Channel(channelName)))
-//    {
-//        return;
-//    }
-
-//}
-
 void Server::rmChannel(const int channelIndex)
 {
     if (!channelList.contains(getChannel(channelIndex)))

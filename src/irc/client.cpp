@@ -97,14 +97,14 @@ void Client::rmServer(int serverIndex)
     serverList.removeAt(serverIndex);
 }
 
-void Client::rmChannel(Server &server, const int channelIndex)
-{
-    if (!serverList.contains(server))
-    {
-        return;
-    }
-    server.rmChannel(channelIndex);
-}
+//void Client::rmChannel(Server &server, const int channelIndex) //需要重载Server的opterator==
+//{
+//    if (!serverList.contains(server))
+//    {
+//        return;
+//    }
+//    server.rmChannel(channelIndex);
+//}
 
 void Client::rmChannel(const int serverIndex, const int channelIndex)
 {

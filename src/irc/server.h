@@ -44,4 +44,6 @@ class Server : public QObject
     void receiveData();                         //接收数据
     //void rmChannel(const QString channelName);  //删除频道
     void rmChannel(const int channelIndex);     //删除频道
+
+    //bool operator == (const Server server) {};
 };
