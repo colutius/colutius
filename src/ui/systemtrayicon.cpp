@@ -1,32 +1,32 @@
-#include "systemTrayIcon.h"
+#include "systemtrayicon.h"
 
-systemTrayIcon::systemTrayIcon(Widget *widget, QSystemTrayIcon *parent)
+SystemTrayIcon::SystemTrayIcon(Widget *widget, QSystemTrayIcon *parent)
 {
     this->widget = widget;
     initTrayIcon();
     initConnect();
 }
-systemTrayIcon::~systemTrayIcon()
+SystemTrayIcon::~SystemTrayIcon()
 {
     config->deleteLater();
     start->deleteLater();
     exit->deleteLater();
     systemTrayIconMenu->deleteLater();
 }
-void systemTrayIcon::initConnect()
+void SystemTrayIcon::initConnect()
 {
     //添加系统托盘更新
-    connect(this, &systemTrayIcon::updateTrayIconSignal, this, &systemTrayIcon::updateTrayIcon);
+    connect(this, &SystemTrayIcon::updateTrayIconSignal, this, &SystemTrayIcon::updateTrayIcon);
     //双击托盘关联
-    connect(this, &systemTrayIcon::activated, this, &systemTrayIcon::showMainWidget);
+    connect(this, &SystemTrayIcon::activated, this, &SystemTrayIcon::showMainWidget);
     //退出
-    connect(exit, &QAction::triggered, this, &systemTrayIcon::OnExit);
+    connect(exit, &QAction::triggered, this, &SystemTrayIcon::OnExit);
     //显示配置界面
-    connect(config, &QAction::triggered, this, &systemTrayIcon::showConfigPage);
+    connect(config, &QAction::triggered, this, &SystemTrayIcon::showConfigPage);
     //显示主界面
-    connect(start, &QAction::triggered, this, &systemTrayIcon::showMainWidget);
+    connect(start, &QAction::triggered, this, &SystemTrayIcon::showMainWidget);
 }
-void systemTrayIcon::initTrayIcon()
+void SystemTrayIcon::initTrayIcon()
 {
     this->setIcon(QIcon(":/img/img/icon.png"));
     this->setToolTip("Colutius-XXX");
@@ -47,17 +47,17 @@ void systemTrayIcon::initTrayIcon()
     this->setContextMenu(systemTrayIconMenu);
 }
 
-void systemTrayIcon::OnExit()
+void SystemTrayIcon::OnExit()
 {
     qApp->exit(0);
 }
 
-void systemTrayIcon::showMainWidget()
+void SystemTrayIcon::showMainWidget()
 {
     //显示主窗口
     widget->showNormal();
 }
-void systemTrayIcon::updateTrayIcon()
+void SystemTrayIcon::updateTrayIcon()
 {
     // TODO 从中间件获取服务器相应信息
 
@@ -69,7 +69,7 @@ void systemTrayIcon::updateTrayIcon()
     this->setToolTip(tipString);
 }
 
-void systemTrayIcon::showConfigPage()
+void SystemTrayIcon::showConfigPage()
 {
     widget->config();
 }

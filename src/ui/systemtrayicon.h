@@ -5,7 +5,7 @@
 #include <QMenu>
 #include <QSystemTrayIcon>
 
-class systemTrayIcon : public QSystemTrayIcon
+class SystemTrayIcon : public QSystemTrayIcon
 {
     Q_OBJECT
   signals:
@@ -17,8 +17,8 @@ class systemTrayIcon : public QSystemTrayIcon
     QAction *config;
     QAction *exit;
     QAction *start;
-    explicit systemTrayIcon(Widget *widget, QSystemTrayIcon *parent = nullptr);
-    ~systemTrayIcon() override;
+    explicit SystemTrayIcon(Widget *widget, QSystemTrayIcon *parent = nullptr);
+    ~SystemTrayIcon() override;
 
     void initTrayIcon();   //初始化托盘图标
     void initConnect();    //初始化信号槽
