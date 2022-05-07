@@ -19,7 +19,7 @@ SOURCES += \
     src/ui/config.cpp \
     src/ui/login.cpp \
     src/ui/widget.cpp \
-    src/ui/systemTrayIcon.cpp \
+    src/ui/systemtrayicon.cpp \
 
 HEADERS += \
     src/irc/fileio.h \
@@ -31,7 +31,7 @@ HEADERS += \
     src/ui/config.h \
     src/ui/login.h \
     src/ui/widget.h \
-    src/ui/systemTrayIcon.h \
+    src/ui/systemtrayicon.h \
 
 FORMS += \
     src/ui/config.ui \

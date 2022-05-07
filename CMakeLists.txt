@@ -21,8 +21,8 @@ add_executable(${PROJECT_NAME}
         src/ui/config.cpp
         src/ui/config.h
         src/ui/config.ui
-        src/ui/systemTrayIcon.cpp
-        src/ui/systemTrayIcon.h
+        src/ui/systemtrayicon.cpp
+        src/ui/systemtrayicon.h
         src/ui/bochatwidget.cpp
         src/ui/bochatwidget.h
 

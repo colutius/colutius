@@ -3,6 +3,7 @@
 Channel::Channel(QString name, QObject *parent)
 {
     this->name = name;
+
     this->item = new QListWidgetItem(this->name);
 }
 Channel::~Channel() = default;

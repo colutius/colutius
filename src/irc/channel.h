@@ -1,13 +1,17 @@
 #pragma once
 
 #include "message.h"
+#include <QAction>
 #include <QDebug>
+#include <QMenu>
 #include <QObject>
 
 class Channel : public QObject
 {
     Q_OBJECT
   public:
+    QAction *part;
+    QMenu *menu;
     QList<Message *> messageList; //消息列表
     QString name;                 //频道名称
     QListWidgetItem *item;        //列表项目

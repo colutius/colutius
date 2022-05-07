@@ -16,6 +16,8 @@ class Client : public QObject
     void addChannelSuccess(); //加入频道成功
     void addChannelFail();    //加入频道失败
   public:
+    // QMap<QListWidgetItem *, Server *> serverList;
+
     QList<Server *> serverList; //服务器列表
 
     explicit Client(QObject *parent = nullptr);
