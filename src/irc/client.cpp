@@ -71,13 +71,15 @@ void Client::addChannel(const QString &channelName, int serverIndex)
 //发送消息
 Message *Client::sendMsg(Server *server, Channel *channel, QString msg)
 {
-    Message *message = new Message();
+    auto *message = new Message(MsgType::send);
     message->setrawMsg(msg);
-    message->parseSend(msg, channel->getName(), server->nick);
-    if (message->command == "/msg")
+    message->setNick(server->nick);
+    message->setTFWhere(channel->getName());
+    message->parseSend();
+    if (message->getCommand() == "/msg")
     {
-        server->sendData("PRIVMSG " + message->getSender() + " :" + message->getMainMsg());
-        server->addChannel(message->getSender());
+        server->sendData("PRIVMSG " + message->getTFWhere() + " :" + message->getMainMsg());
+        server->addChannel(message->getTFWhere());
         return message;
     }
     else
@@ -97,14 +99,14 @@ void Client::rmServer(int serverIndex)
     serverList.removeAt(serverIndex);
 }
 
-//void Client::rmChannel(Server &server, const int channelIndex) //需要重载Server的opterator==
+// void Client::rmChannel(Server &server, const int channelIndex) //需要重载Server的opterator==
 //{
-//    if (!serverList.contains(server))
-//    {
-//        return;
-//    }
-//    server.rmChannel(channelIndex);
-//}
+//     if (!serverList.contains(server))
+//     {
+//         return;
+//     }
+//     server.rmChannel(channelIndex);
+// }
 
 void Client::rmChannel(const int serverIndex, const int channelIndex)
 {

@@ -129,14 +129,15 @@ void Server::receiveData()
         if (!i.isEmpty())
         {
             //新建消息实例
-            auto msg = new Message;
+            auto msg = new Message(MsgType::receive);
             //设置原始数据
             msg->setrawMsg(i);
             //解析消息
-            msg->parse();
-            if (msg->sender == this->nick)
+            msg->parseReceive();
+            //如果解析获得的消息去向与自己昵称相同，说明是给自己的私信
+            if (msg->getTFWhere() == this->nick)
             {
-                msg->sender = msg->nick;
+                msg->setTFWhere(msg->getNick());
             }
             //回应PING
             if (msg->getCommand() == "PING")
@@ -162,15 +163,13 @@ void Server::receiveData()
             else if (msg->getCommand() == "PRIVMSG")
             {
                 qDebug() << "接收到一条用户消息";
-#ifdef __linux__
-                QString notify = "notify-send '" + msg->getSender() + "'  '" + msg->getMainMsg() + "' " + "-t 10000";
+                // TODO 发送系统通知
+                QString notify = "notify-send '" + msg->getTFWhere() + "'  '" + msg->getMainMsg() + "' " + "-t 10000";
                 system(notify.toStdString().data());
-#elif __WIN32__
-// windows 系统通知
-#endif
+                //匹配消息来源频道
                 foreach (Channel *channel, this->channelList)
                 {
-                    if (msg->getSender() == channel->getName())
+                    if (msg->getTFWhere() == channel->getName())
                     {
                         qDebug() << channel->getName() + "频道收到新消息";
                         channel->addMessage(msg);
@@ -179,8 +178,9 @@ void Server::receiveData()
                     }
                 }
                 //能执行到这儿说明是陌生人的消息
-                this->addChannel(msg->getSender());
-                qDebug() << this->getChannel(this->getChannelNum() - 1)->getName() + "频道收到新消息";
+                //按添加频道的方式添加私信
+                this->addChannel(msg->getTFWhere());
+                qDebug() << "收到来自" + msg->getTFWhere() + "的私信消息";
                 this->getChannel(this->getChannelNum() - 1)->addMessage(msg);
                 emit get();
             }
