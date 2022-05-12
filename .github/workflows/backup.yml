@@ -14,4 +14,4 @@ jobs:
           target_repo_url:
             git@jihulab.com:colutius/colutius.git
           ssh_private_key:
-            ${{ secrets.JIHULAB_KEY }}
+            ${{ secrets.JIHULAB_SSH_KEY }}
